@@ -1,14 +1,21 @@
-import LoginPage from "./pages/LoginPage";
-import RegisterPage from "./pages/RegisterPage";
-import { BrowserRouter, Routes, Route } from "react-router";
+import { Routes, Route, Navigate } from "react-router";
+import LoginPage from "./Pages/LoginPage";
+import ProtectedRoute from "./Auth/ProtectedRoute";
+import DashboardPage from "./Pages/DashboardPage";
 
 export default function App() {
   return (
-    <BrowserRouter>
-      <Routes>
-        <Route path="/" element={<LoginPage />} />
-        <Route path="/register" element={<RegisterPage />} />
-      </Routes>
-    </BrowserRouter>
+    <Routes>
+      <Route path="/login" element={<LoginPage />} />
+      <Route
+        path="/dashboard"
+        element={
+          <ProtectedRoute>
+            <DashboardPage />
+          </ProtectedRoute>
+        }
+      />
+      <Route path="*" element={<Navigate to="/dashboard" replace />} />
+    </Routes>
   );
 }
